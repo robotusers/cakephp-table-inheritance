@@ -17,8 +17,20 @@ class StiBehavior extends Behavior
      * @var array
      */
     protected $_defaultConfig = [
-        'discriminatorField' => static::OPTION_NAME
+        'discriminatorField' => static::OPTION_NAME,
+        'table' => null
     ];
+
+    /**
+     *
+     * @param array $config
+     */
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+
+        $this->_table->table($this->_config['table']);
+    }
 
     /**
      *

@@ -5,11 +5,9 @@
 	"type": "cakephp-plugin",
 	"require": {
         "php": "~5.5",
-		"cakephp/core": "~3.1-dev",
 		"cakephp/datasource": "~3.1-dev",
-		"cakephp/orm": "~3.1-dev",
-		"robotusers/cakephp-ioc": "~0.3-dev",
-		"robotusers/cakephp-utils": "~0.4-dev"
+		"cakephp/event": "~3.1-dev",
+		"cakephp/orm": "~3.1-dev"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*",

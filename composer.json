@@ -1,0 +1,32 @@
+{
+	"name": "robotusers/cakephp-table-inheritance",
+	"description": "Robotusers' CakePHP STI & CTI pattern plugin",
+	"homepage": "http://composer.zano.co",
+	"type": "cakephp-plugin",
+	"require": {
+        "php": "~5.5",
+		"cakephp/core": "~3.1-dev",
+		"cakephp/datasource": "~3.1-dev",
+		"cakephp/orm": "~3.1-dev",
+		"robotusers/cakephp-ioc": "~0.3-dev",
+		"robotusers/cakephp-utils": "~0.4-dev"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*",
+		"cakephp/cakephp": "~3.1-dev",
+        "cakephp/cakephp-codesniffer": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Robotusers\\TableInheritance\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Cake\\Test\\": "vendor/cakephp/cakephp/tests",
+			"Robotusers\\TableInheritance\\Test\\": "tests"
+		}
+	},
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

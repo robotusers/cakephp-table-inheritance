@@ -31,7 +31,7 @@ class StiBehavior extends Behavior
             $this->_discriminator = $discriminator;
         }
         if ($this->_discriminator === null) {
-            $this->_discriminator = $this->alias();
+            $this->_discriminator = $this->_table->alias();
         }
         return $this->_discriminator;
     }
@@ -63,7 +63,7 @@ class StiBehavior extends Behavior
 
         if ($discriminator !== false) {
             $query->where([
-                $this->aliasField($this->_config['discriminatorField']) => $discriminator
+                $this->_table->aliasField($this->_config['discriminatorField']) => $discriminator
             ]);
         }
     }

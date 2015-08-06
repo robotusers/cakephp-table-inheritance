@@ -1,13 +1,13 @@
 {
 	"name": "robotusers/cakephp-table-inheritance",
-	"description": "Robotusers' CakePHP STI & CTI pattern plugin",
+	"description": "Robotusers CakePHP STI & CTI pattern plugin",
 	"homepage": "http://composer.zano.co",
 	"type": "cakephp-plugin",
 	"require": {
-        "php": "~5.5",
-		"cakephp/datasource": "~3.1-dev",
-		"cakephp/event": "~3.1-dev",
-		"cakephp/orm": "~3.1-dev"
+        "php": "~5.4",
+		"cakephp/datasource": "~3.0",
+		"cakephp/event": "~3.0",
+		"cakephp/orm": "~3.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*",

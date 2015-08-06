@@ -1,7 +1,7 @@
 {
 	"name": "robotusers/cakephp-table-inheritance",
 	"description": "Robotusers CakePHP STI & CTI pattern plugin",
-	"homepage": "http://composer.zano.co",
+	"homepage": "https://github.com/robotusers/cakephp-table-inheritance",
 	"type": "cakephp-plugin",
 	"require": {
         "php": "~5.4",

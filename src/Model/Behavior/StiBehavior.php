@@ -10,14 +10,14 @@ use Cake\ORM\Query;
 
 class StiBehavior extends Behavior
 {
-    const OPTION_NAME = 'discriminator';
 
     /**
      *
      * @var array
      */
     protected $_defaultConfig = [
-        'discriminatorField' => static::OPTION_NAME,
+        'discriminatorField' => 'discriminator',
+        'discriminator' => null,
         'table' => null
     ];
 
@@ -27,9 +27,12 @@ class StiBehavior extends Behavior
      */
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
-        $this->_table->table($this->_config['table']);
+        if ($this->_config['table'] !== null) {
+            $this->_table->table($this->_config['table']);
+        }
+        if ($this->_config['discriminator'] !== null) {
+            $this->discriminator($this->_config['discriminator']);
+        }
     }
 
     /**
@@ -87,6 +90,6 @@ class StiBehavior extends Behavior
      */
     protected function _discriminator($options)
     {
-        return $options->offsetExists(static::OPTION_NAME) ? $options[static::OPTION_NAME] : $this->discriminator();
+        return isset($options['discriminator']) ? $options['discriminator'] : $this->discriminator();
     }
 }

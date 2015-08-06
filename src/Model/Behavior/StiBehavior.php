@@ -28,6 +28,13 @@ class StiBehavior extends Behavior
     ];
 
     /**
+     * Discriminator value.
+     *
+     * @var string
+     */
+    protected $_discriminator;
+
+    /**
      * Initialize method.
      *
      * @param array $config

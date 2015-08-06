@@ -4,14 +4,14 @@ This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/
 
 **NOTE: This plugin is under development! Use it at your own risk**
 
-# Installation
+## Installation
 
 Using composer:
 ```
 composer require robotusers/cakephp-table-inheritance ~0.1-dev
 ```
 
-# How to make this work?
+## How to make this work?
 
 For now only STI is supported. Just add a behavior to your tables:
 ```php
@@ -26,9 +26,8 @@ public function initialize(array $config)
 //in AdministratorsTable:
 public function initialize(array $config)
 {
-    $this->addBehavior('Robotusers/TableInheritance.Sti', [
-        'table' => 'users'
-    ]);
+    $this->table('users');
+    $this->addBehavior('Robotusers/TableInheritance.Sti');
 }
 ```
 Now both the `ClientsTable` and `AdministratorsTable` will share `users` db table. A table has to have a `discriminator` field which will be used to determine which model's record is stored in a row.
@@ -37,4 +36,4 @@ Now both the `ClientsTable` and `AdministratorsTable` will share `users` db tabl
 
 * `discriminatorField` - db table field used to discriminate models, 'discriminator' by default
 * `discriminator` - discriminator value, `$table->alias()` by default
-* `table` - db table to use
+* `table` - db table to share, use this option or `$table->table()` method.

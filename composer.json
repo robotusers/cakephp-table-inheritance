@@ -1,30 +1,30 @@
 {
-	"name": "robotusers/cakephp-table-inheritance",
-	"description": "Robotusers CakePHP STI & CTI pattern plugin",
-	"homepage": "https://github.com/robotusers/cakephp-table-inheritance",
-	"type": "cakephp-plugin",
-	"require": {
+    "name": "robotusers/cakephp-table-inheritance",
+    "description": "Robotusers CakePHP STI & CTI pattern plugin",
+    "homepage": "https://github.com/robotusers/cakephp-table-inheritance",
+    "type": "cakephp-plugin",
+    "require": {
         "php": "~5.4",
-		"cakephp/datasource": "~3.0",
-		"cakephp/event": "~3.0",
-		"cakephp/orm": "~3.0"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "*",
-		"cakephp/cakephp": "~3.1-dev",
-        "cakephp/cakephp-codesniffer": "dev-master"
-	},
-	"autoload": {
-		"psr-4": {
-			"Robotusers\\TableInheritance\\": "src"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Cake\\Test\\": "vendor/cakephp/cakephp/tests",
-			"Robotusers\\TableInheritance\\Test\\": "tests"
-		}
-	},
+        "cakephp/datasource": "~3.0",
+        "cakephp/event": "~3.0",
+        "cakephp/orm": "~3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "cakephp/cakephp": "~3.0",
+        "cakephp/cakephp-codesniffer": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Robotusers\\TableInheritance\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests",
+            "Robotusers\\TableInheritance\\Test\\": "tests"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }

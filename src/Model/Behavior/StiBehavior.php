@@ -8,10 +8,16 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 
+/**
+ * @author Robert Pustułka robert.pustulka@gmail.com
+ * @copyright 2015 RobotUsers
+ * @license MIT
+ */
 class StiBehavior extends Behavior
 {
 
     /**
+     * Defualt options.
      *
      * @var array
      */
@@ -22,6 +28,7 @@ class StiBehavior extends Behavior
     ];
 
     /**
+     * Initialize method.
      *
      * @param array $config
      */
@@ -36,8 +43,9 @@ class StiBehavior extends Behavior
     }
 
     /**
+     * Accessor/mutator for discriminator value. It's the value used to determine which row belongs to which table.
      *
-     * @param string $discriminator
+     * @param string|null $discriminator Discriminator value.
      * @return string
      */
     public function discriminator($discriminator = null)
@@ -52,10 +60,11 @@ class StiBehavior extends Behavior
     }
 
     /**
-     * 
-     * @param Event $event
-     * @param EntityInterface $entity
-     * @param ArrayAccess $options
+     * beforeSave callback.
+     *
+     * @param \Cake\Event\Event $event
+     * @param \Cake\Datasource\EntityInterface $entity
+     * @param \ArrayAccess $options
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayAccess $options)
     {
@@ -67,10 +76,11 @@ class StiBehavior extends Behavior
     }
 
     /**
+     * beforeFind callback.
      *
-     * @param Event $event
-     * @param Query $query
-     * @param ArrayAccess $options
+     * @param \Cake\Event\Event $event
+     * @param \Cake\ORM\Query $query
+     * @param \ArrayAccess $options
      */
     public function beforeFind(Event $event, Query $query, ArrayAccess $options)
     {
@@ -80,6 +90,27 @@ class StiBehavior extends Behavior
             $query->where([
                 $this->_table->aliasField($this->_config['discriminatorField']) => $discriminator
             ]);
+        }
+    }
+
+    /**
+     * beforeDelete callback.
+     *
+     * @param \Cake\Event\Event $event
+     * @param \Cake\Datasource\EntityInterface $entity
+     * @param \ArrayAccess $options
+     */
+    public function beforeDelete(Event $event, EntityInterface $entity, ArrayAccess $options)
+    {
+        $discriminator = $this->_discriminator($options);
+
+        if ($discriminator !== false) {
+            $discriminatorField = $this->_config['discriminatorField'];
+
+            if ($entity->has($discriminatorField) && $entity->get($discriminatorField) !== $discriminator) {
+                $event->stopPropagation();
+                return false;
+            }
         }
     }
 

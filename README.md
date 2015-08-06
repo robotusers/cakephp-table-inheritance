@@ -2,6 +2,13 @@
 
 This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/Single_Table_Inheritance) (and hopefully will implement Class Table Inheritance in the future) patterns for CakePHP 3.x ORM.
 
+# Installation
+
+Using composer:
+```
+composer require robotusers/cakephp-table-inheritance ~0.1-dev
+```
+
 # How to make this work?
 
 For now only STI is supported. Just add a behavior to your tables:

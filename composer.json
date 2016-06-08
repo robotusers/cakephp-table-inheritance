@@ -5,12 +5,11 @@
     "type": "cakephp-plugin",
     "require": {
         "php": ">=5.4",
-        "cakephp/datasource": "~3.0",
-        "cakephp/event": "~3.0",
         "cakephp/orm": "~3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "php": ">=5.5",
+        "phpunit/phpunit": "~5.3.0",
         "cakephp/cakephp": "~3.0",
         "cakephp/cakephp-codesniffer": "@stable"
     },

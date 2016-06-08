@@ -7,7 +7,7 @@ namespace Robotusers\TableInheritance\Model\Entity;
  * @copyright 2016 RobotUsers
  * @license MIT
  */
-trait CopyableEntityInterface
+trait CopyableEntityTrait
 {
 
     /**

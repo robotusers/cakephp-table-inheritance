@@ -8,7 +8,6 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
-use InvalidArgumentException;
 use Robotusers\TableInheritance\Model\Entity\CopyableEntityInterface;
 
 /**
@@ -43,19 +42,17 @@ class StiParentBehavior extends Behavior
      * 
      * @param string $discriminator Discriminator.
      * @return \Cake\ORM\Table
-     * @throws InvalidArgumentException
      */
-    public function childTable($discriminator)
+    public function stiTable($discriminator)
     {
-        if (!array_key_exists($this->_childTables, $discriminator)) {
+        if (!array_key_exists($discriminator, $this->_childTables)) {
             $table = $this->config("tableMap.$discriminator");
 
             if (!$table) {
-                $message = sprintf('Table for discriminator "%s" has not been defined.', $discriminator);
-                throw new InvalidArgumentException($message);
+                $table = $this->_table;
             }
 
-            $this->addChildTable($discriminator, $table);
+            $this->addStiTable($discriminator, $table);
         }
 
         return $this->_childTables[$discriminator];
@@ -68,7 +65,7 @@ class StiParentBehavior extends Behavior
      * @param \Cake\ORM\Table|string|array $table Table instance or alias or config.
      * @return void
      */
-    public function addChildTable($discriminator, $table)
+    public function addStiTable($discriminator, $table)
     {
         if (!$table instanceof Table) {
             if (is_array($table)) {
@@ -116,7 +113,7 @@ class StiParentBehavior extends Behavior
             return $results->map(function ($row) {
                 if ($row instanceof CopyableEntityInterface) {
                     $table = $this->_detectTable($row);
-                    $entityClass = $table->entityClassName();
+                    $entityClass = $table->entityClass();
 
                     $row = new $entityClass($row->copyProperties(), [
                         'markNew' => $row->isNew(),
@@ -142,7 +139,7 @@ class StiParentBehavior extends Behavior
         $property = $this->_config['discriminatorField'];
 
         if (!empty($data[$property])) {
-            $table = $this->childTable($data[$property]);
+            $table = $this->stiTable($data[$property]);
         } else {
             $table = $this->_table;
         }

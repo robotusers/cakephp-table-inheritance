@@ -8,7 +8,7 @@ This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/
 
 Using composer:
 ```
-composer require robotusers/cakephp-table-inheritance ~0.1-dev
+composer require robotusers/cakephp-table-inheritance ~0.2
 ```
 
 ## How to make this work?

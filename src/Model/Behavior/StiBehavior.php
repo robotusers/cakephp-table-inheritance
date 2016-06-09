@@ -7,6 +7,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 
 /**
  * @author Robert Pustułka robert.pustulka@gmail.com
@@ -24,7 +25,8 @@ class StiBehavior extends Behavior
     protected $_defaultConfig = [
         'discriminatorField' => 'discriminator',
         'discriminator' => null,
-        'table' => null
+        'table' => null,
+        'checkDiscriminator' => true
     ];
 
     /**
@@ -67,6 +69,21 @@ class StiBehavior extends Behavior
     }
 
     /**
+     * buildRules callback.
+     *
+     * @param \Cake\Event\Event $event
+     * @param \Cake\ORM\RulesChecker $rules
+     */
+    public function buildRules(Event $event, RulesChecker $rules)
+    {
+        $discriminator = $this->discriminator();
+
+        if ($this->_config['checkDiscriminator'] && $discriminator !== false) {
+            $rules->add([$this, 'checkDiscriminator'], 'discriminator');
+        }
+    }
+
+    /**
      * beforeSave callback.
      *
      * @param \Cake\Event\Event $event
@@ -78,7 +95,10 @@ class StiBehavior extends Behavior
         $discriminator = $this->_discriminator($options);
 
         if ($discriminator !== false) {
-            $entity->set($this->_config['discriminatorField'], $discriminator);
+            $field = $this->_config['discriminatorField'];
+            if (!$this->_config['checkDiscriminator'] || !$entity->has($field)) {
+                $entity->set($field, $discriminator);
+            }
         }
     }
 
@@ -118,6 +138,21 @@ class StiBehavior extends Behavior
                 $event->stopPropagation();
                 return false;
             }
+        }
+    }
+
+    /**
+     * checkDiscriminator rule.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity
+     * @return bool
+     */
+    public function checkDiscriminator(EntityInterface $entity)
+    {
+        $field = $this->_config['discriminatorField'];
+
+        if ($entity->has($field)) {
+            return $entity->get($field) === $this->discriminator();
         }
     }
 

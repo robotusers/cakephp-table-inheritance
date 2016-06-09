@@ -39,6 +39,7 @@ Now both the `ClientsTable` and `AdministratorsTable` will share `users` db tabl
 * `discriminatorField` - db table field used to discriminate models, 'discriminator' by default
 * `discriminator` - discriminator value, `$table->alias()` by default
 * `table` - db table to share, use this option or `$table->table()` method.
+* `checkRules` - `true` by default. Allows to enable/disable build-in rule check for a discriminator value.
 
 ## StiParentBehavior
 

@@ -3,6 +3,7 @@
 namespace Robotusers\TableInheritance\Model\Behavior;
 
 use ArrayAccess;
+use Cake\Datasource\EntityInterface;
 use Cake\Database\Query;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
@@ -27,6 +28,7 @@ class StiParentBehavior extends Behavior
      */
     protected $_defaultConfig = [
         'tableMap' => [],
+        'discriminatorMap' => [],
         'discriminatorField' => 'discriminator'
     ];
 
@@ -46,8 +48,11 @@ class StiParentBehavior extends Behavior
     public function stiTable($discriminator)
     {
         if (!array_key_exists($discriminator, $this->_childTables)) {
-            $table = $this->config("tableMap.$discriminator");
+            $table = $this->config("discriminatorMap.$discriminator");
 
+            if (!$table) {
+                $table = $this->_findTableInMap();
+            }
             if (!$table) {
                 $table = $this->_table;
             }
@@ -145,5 +150,19 @@ class StiParentBehavior extends Behavior
         }
 
         return $table;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function _findTableInMap()
+    {
+        $map = $this->_config['tableMap'];
+        foreach ($map as $table => $discriminators) {
+            if (in_array($table, (array)$discriminators)) {
+                return $table;
+            }
+        }
     }
 }

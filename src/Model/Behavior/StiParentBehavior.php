@@ -47,8 +47,13 @@ class StiParentBehavior extends Behavior
      */
     public function stiTable($subject)
     {
-        if ($subject instanceof EntityInterface) {
-            $discriminator = $subject->get($this->_config['discriminatorField']);
+        if (is_array($subject) || $subject instanceof ArrayAccess) {
+            $property = $this->_config['discriminatorField'];
+            if (isset($subject[$property])) {
+                $discriminator = $subject[$property];
+            } else {
+                return $this->_table;
+            }
         } else {
             $discriminator = $subject;
         }
@@ -102,7 +107,7 @@ class StiParentBehavior extends Behavior
      */
     public function newStiEntity(array $data = [], array $options = [])
     {
-        $table = $this->_detectTable($data);
+        $table = $this->stiTable($data);
 
         return $table->newEntity($data, $options);
     }
@@ -123,7 +128,7 @@ class StiParentBehavior extends Behavior
         $query->formatResults(function ($results) {
             return $results->map(function ($row) {
                 if ($row instanceof CopyableEntityInterface) {
-                    $table = $this->_detectTable($row);
+                    $table = $this->stiTable($row);
                     $entityClass = $table->entityClass();
 
                     $row = new $entityClass($row->copyProperties(), [
@@ -137,25 +142,6 @@ class StiParentBehavior extends Behavior
                 return $row;
             });
         });
-    }
-
-    /**
-     * Detect STI table based on data.
-     *
-     * @param array $data Data.
-     * @return \Cake\ORM\Table
-     */
-    protected function _detectTable($data)
-    {
-        $property = $this->_config['discriminatorField'];
-
-        if (!empty($data[$property])) {
-            $table = $this->stiTable($data[$property]);
-        } else {
-            $table = $this->_table;
-        }
-
-        return $table;
     }
 
     /**

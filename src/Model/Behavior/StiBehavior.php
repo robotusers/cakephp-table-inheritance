@@ -15,9 +15,11 @@ use Cake\ORM\RulesChecker;
  */
 class StiBehavior extends Behavior
 {
+    
+    use MatchesTrait;
 
     /**
-     * Defualt options.
+     * Default options.
      *
      * @var array
      */
@@ -103,7 +105,7 @@ class StiBehavior extends Behavior
      */
     public function isAcceptedDiscriminator($discriminator)
     {
-        return in_array($discriminator, $this->acceptedDiscriminators());
+        return $this->_matches($discriminator, $this->acceptedDiscriminators());
     }
 
     /**

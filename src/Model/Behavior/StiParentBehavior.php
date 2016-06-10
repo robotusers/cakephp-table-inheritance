@@ -12,13 +12,14 @@ use Robotusers\TableInheritance\Model\Entity\CopyableEntityInterface;
 
 /**
  * @author Robert Pustułka robert.pustulka@gmail.com
- * @copyright 2015 RobotUsers
+ * @copyright 2016 RobotUsers
  * @license MIT
  */
 class StiParentBehavior extends Behavior
 {
 
     use LocatorAwareTrait;
+    use MatchesTrait;
 
     /**
      * Defualt options.
@@ -58,10 +59,10 @@ class StiParentBehavior extends Behavior
         }
 
         if (!array_key_exists($discriminator, $this->_childTables)) {
-            $table = $this->config("discriminatorMap.$discriminator");
+            $table = $this->_findInTableMap($discriminator);
 
             if (!$table) {
-                $table = $this->_findTableInMap();
+                $table = $this->_findInDiscriminatorMap($discriminator);
             }
             if (!$table) {
                 $table = $this->_table;
@@ -144,14 +145,32 @@ class StiParentBehavior extends Behavior
     }
 
     /**
+     * Searches for a match in tableMap.
      *
+     * @param string $discriminator Discriminator.
      * @return string
      */
-    protected function _findTableInMap()
+    protected function _findInTableMap($discriminator)
     {
         $map = $this->_config['tableMap'];
-        foreach ($map as $table => $discriminators) {
-            if (in_array($table, (array)$discriminators)) {
+        foreach ($map as $table => $rules) {
+            if ($this->_matches($discriminator, (array)$rules)) {
+                return $table;
+            }
+        }
+    }
+
+    /**
+     * Searches for a match in tableMap.
+     *
+     * @param string $discriminator Discriminator.
+     * @return mixed
+     */
+    protected function _findInDiscriminatorMap($discriminator)
+    {
+        $map = $this->_config['discriminatorMap'];
+        foreach ($map as $rule => $table) {
+            if ($this->_matches($discriminator, (array)$rule)) {
                 return $table;
             }
         }

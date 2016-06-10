@@ -3,7 +3,6 @@
 namespace Robotusers\TableInheritance\Model\Behavior;
 
 use ArrayAccess;
-use Cake\Datasource\EntityInterface;
 use Cake\Database\Query;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
@@ -41,7 +40,7 @@ class StiParentBehavior extends Behavior
 
     /**
      * Gets a STI table.
-     * 
+     *
      * @param string|\Cake\Datasource\EntityInterface $subject Discriminator value or an entity.
      * @return \Cake\ORM\Table
      */
@@ -100,7 +99,7 @@ class StiParentBehavior extends Behavior
 
     /**
      * Creates new entity using STI table.
-     * 
+     *
      * @param array $data Data.
      * @param array $options Options.
      * @return \Cake\Datasource\EntityInterface

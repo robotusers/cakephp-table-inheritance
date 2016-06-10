@@ -2,7 +2,7 @@
 
 namespace Robotusers\TableInheritance\Test\Mock;
 
-class Editor extends User
+class Reader extends User
 {
 
 }

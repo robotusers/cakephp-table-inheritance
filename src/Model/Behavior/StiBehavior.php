@@ -47,6 +47,7 @@ class StiBehavior extends Behavior
      * Initialize method.
      *
      * @param array $config Config.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -168,7 +169,7 @@ class StiBehavior extends Behavior
      *
      * @param \Cake\Event\Event $event Event.
      * @param \Cake\Datasource\EntityInterface $entity Entity.
-     * @return void
+     * @return bool
      */
     public function beforeDelete(Event $event, EntityInterface $entity)
     {

@@ -122,3 +122,16 @@ Afterwards you can get a STI table using `stiTable()` method and handle entity u
 $table = $this->Users->stiTable($admin); 
 $table->save($admin); //it will save an entity using AdministratorsTable
 ```
+
+You can also directly detect STI table from data array:
+
+```php
+$data = [
+    'name' => 'super-admin',
+    'discriminator' => 'admin'
+];
+
+$table = $this->Users->stiTable($data);
+$admin = $table->newEntity($data);
+$table->save($admin);
+```

@@ -27,6 +27,7 @@ class StiParentBehavior extends Behavior
      */
     protected $_defaultConfig = [
         'tableMap' => [],
+        'discriminatorMap' => [],
         'discriminatorField' => 'discriminator'
     ];
 
@@ -39,15 +40,29 @@ class StiParentBehavior extends Behavior
 
     /**
      * Gets a STI table.
-     * 
-     * @param string $discriminator Discriminator.
+     *
+     * @param string|\Cake\Datasource\EntityInterface $subject Discriminator value or an entity.
      * @return \Cake\ORM\Table
      */
-    public function stiTable($discriminator)
+    public function stiTable($subject)
     {
-        if (!array_key_exists($discriminator, $this->_childTables)) {
-            $table = $this->config("tableMap.$discriminator");
+        if (is_array($subject) || $subject instanceof ArrayAccess) {
+            $property = $this->_config['discriminatorField'];
+            if (isset($subject[$property])) {
+                $discriminator = $subject[$property];
+            } else {
+                return $this->_table;
+            }
+        } else {
+            $discriminator = $subject;
+        }
 
+        if (!array_key_exists($discriminator, $this->_childTables)) {
+            $table = $this->config("discriminatorMap.$discriminator");
+
+            if (!$table) {
+                $table = $this->_findTableInMap();
+            }
             if (!$table) {
                 $table = $this->_table;
             }
@@ -84,14 +99,14 @@ class StiParentBehavior extends Behavior
 
     /**
      * Creates new entity using STI table.
-     * 
+     *
      * @param array $data Data.
      * @param array $options Options.
      * @return \Cake\Datasource\EntityInterface
      */
     public function newStiEntity(array $data = [], array $options = [])
     {
-        $table = $this->_detectTable($data);
+        $table = $this->stiTable($data);
 
         return $table->newEntity($data, $options);
     }
@@ -112,7 +127,7 @@ class StiParentBehavior extends Behavior
         $query->formatResults(function ($results) {
             return $results->map(function ($row) {
                 if ($row instanceof CopyableEntityInterface) {
-                    $table = $this->_detectTable($row);
+                    $table = $this->stiTable($row);
                     $entityClass = $table->entityClass();
 
                     $row = new $entityClass($row->copyProperties(), [
@@ -129,21 +144,16 @@ class StiParentBehavior extends Behavior
     }
 
     /**
-     * Detect STI table based on data.
      *
-     * @param array $data Data.
-     * @return \Cake\ORM\Table
+     * @return string
      */
-    protected function _detectTable($data)
+    protected function _findTableInMap()
     {
-        $property = $this->_config['discriminatorField'];
-
-        if (!empty($data[$property])) {
-            $table = $this->stiTable($data[$property]);
-        } else {
-            $table = $this->_table;
+        $map = $this->_config['tableMap'];
+        foreach ($map as $table => $discriminators) {
+            if (in_array($table, (array)$discriminators)) {
+                return $table;
+            }
         }
-
-        return $table;
     }
 }

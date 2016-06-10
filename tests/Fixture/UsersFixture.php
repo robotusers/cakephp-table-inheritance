@@ -18,5 +18,4 @@ class UsersFixture extends TestFixture
         'name' => ['type' => 'string'],
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
     ];
-
 }

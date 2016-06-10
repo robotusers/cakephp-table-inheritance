@@ -73,6 +73,33 @@ class StiParentBehaviorTest extends TestCase
         $readers->entityClass(Reader::class);
     }
 
+    public function testStiTable()
+    {
+        $this->table->behaviors()->get('StiParent')->config('tableMap', [
+            'Readers' => 'reader_*'
+        ], false);
+        $this->table->behaviors()->get('StiParent')->config('discriminatorMap', [
+            '*author' => TableRegistry::get('Authors')
+        ], false);
+
+        $map = [
+            'reader_1' => 'Readers',
+            'reader_2' => 'Readers',
+            'super_author' => 'Authors',
+            'bestselling-author' => 'Authors',
+            'other' => 'Users',
+            '' => 'Users',
+        ];
+
+        foreach ($map as $discriminator => $alias) {
+            $entity = $this->table->newEntity([
+                'discriminator' => $discriminator
+            ]);
+            $table = $this->table->stiTable($entity);
+            $this->assertEquals($alias, $table->alias());
+        }
+    }
+
     public function tearDown()
     {
         parent::tearDown();
@@ -114,18 +141,5 @@ class StiParentBehaviorTest extends TestCase
             $class = $this->entityMap[$entity->discriminator];
             $this->assertInstanceOf($class, $entity);
         }
-    }
-
-    public function testStiTable()
-    {
-        $entity = $this->table->newStiEntity([
-            'discriminator' => 'Readers'
-        ]);
-
-        $table = $this->table->stiTable($entity);
-        $this->assertEquals('Readers', $table->alias());
-
-        $table = $this->table->stiTable('Readers');
-        $this->assertEquals('Readers', $table->alias());
     }
 }

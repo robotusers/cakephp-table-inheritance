@@ -25,7 +25,7 @@ class StiBehavior extends Behavior
         'discriminatorField' => 'discriminator',
         'discriminator' => null,
         'table' => null,
-        'checkDiscriminator' => true,
+        'checkRules' => true,
         'acceptedDiscriminators' => []
     ];
 
@@ -127,8 +127,8 @@ class StiBehavior extends Behavior
     {
         $discriminator = $this->discriminator();
 
-        if ($this->_config['checkDiscriminator'] && $discriminator !== false) {
-            $rule = [$this, 'checkDiscriminator'];
+        if ($this->_config['checkRules'] && $discriminator !== false) {
+            $rule = [$this, 'checkRules'];
             $rules->add($rule, 'discriminator');
         }
     }
@@ -181,12 +181,12 @@ class StiBehavior extends Behavior
     }
 
     /**
-     * checkDiscriminator rule.
+     * checkRules rule.
      *
      * @param \Cake\Datasource\EntityInterface $entity Entity.
      * @return bool
      */
-    public function checkDiscriminator(EntityInterface $entity)
+    public function checkRules(EntityInterface $entity)
     {
         $field = $this->_config['discriminatorField'];
 

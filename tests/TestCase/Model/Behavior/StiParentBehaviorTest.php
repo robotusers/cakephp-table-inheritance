@@ -6,6 +6,7 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Robotusers\TableInheritance\Test\Mock\Author;
 use Robotusers\TableInheritance\Test\Mock\Editor;
+use Robotusers\TableInheritance\Test\Mock\Reader;
 use Robotusers\TableInheritance\Test\Mock\User;
 
 /**
@@ -33,6 +34,8 @@ class StiParentBehaviorTest extends TestCase
             'Authors' => Author::class,
             'Users' => User::class,
             'Editors' => Editor::class,
+            'Readers' => Reader::class,
+            'Subscribers' => Reader::class,
             '' => User::class
         ];
         
@@ -45,18 +48,29 @@ class StiParentBehaviorTest extends TestCase
         $editors = TableRegistry::get('Editors', [
             'table' => 'users'
         ]);
+        $readers = TableRegistry::get('Readers', [
+            'table' => 'users'
+        ]);
 
         $authors->addBehavior('Robotusers/TableInheritance.Sti');
         $editors->addBehavior('Robotusers/TableInheritance.Sti');
+        $readers->addBehavior('Robotusers/TableInheritance.Sti');
         $this->table->addBehavior('Robotusers/TableInheritance.StiParent', [
-            'tableMap' => [
+            'discriminatorMap' => [
                 'Authors' => 'Authors',
                 'Editors' => 'Editors'
+            ],
+            'tableMap' => [
+                'Readers' => [
+                    'Readers',
+                    'Subscribers'
+                ]
             ]
         ]);
 
         $authors->entityClass(Author::class);
         $editors->entityClass(Editor::class);
+        $readers->entityClass(Reader::class);
     }
 
     public function tearDown()
@@ -94,11 +108,24 @@ class StiParentBehaviorTest extends TestCase
         $this->table->saveMany($entities);
 
         $found = $this->table->find()->toArray();
-        $this->assertCount(4, $found);
+        $this->assertCount(6, $found);
 
         foreach ($found as $entity) {
             $class = $this->entityMap[$entity->discriminator];
             $this->assertInstanceOf($class, $entity);
         }
+    }
+
+    public function testStiTable()
+    {
+        $entity = $this->table->newStiEntity([
+            'discriminator' => 'Readers'
+        ]);
+
+        $table = $this->table->stiTable($entity);
+        $this->assertEquals('Readers', $table->alias());
+
+        $table = $this->table->stiTable('Readers');
+        $this->assertEquals('Readers', $table->alias());
     }
 }

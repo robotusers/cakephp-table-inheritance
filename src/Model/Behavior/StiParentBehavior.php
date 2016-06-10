@@ -42,11 +42,17 @@ class StiParentBehavior extends Behavior
     /**
      * Gets a STI table.
      * 
-     * @param string $discriminator Discriminator.
+     * @param string|\Cake\Datasource\EntityInterface $subject Discriminator value or an entity.
      * @return \Cake\ORM\Table
      */
-    public function stiTable($discriminator)
+    public function stiTable($subject)
     {
+        if ($subject instanceof EntityInterface) {
+            $discriminator = $subject->get($this->_config['discriminatorField']);
+        } else {
+            $discriminator = $subject;
+        }
+
         if (!array_key_exists($discriminator, $this->_childTables)) {
             $table = $this->config("discriminatorMap.$discriminator");
 

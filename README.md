@@ -11,7 +11,7 @@ Using composer:
 composer require robotusers/cakephp-table-inheritance ~0.2
 ```
 
-## How to make this work?
+## StiBehavior
 
 For now only STI is supported. Just add a behavior to your tables:
 ```php
@@ -34,12 +34,39 @@ public function initialize(array $config)
 ```
 Now both the `ClientsTable` and `AdministratorsTable` will share `users` db table. A table has to have a `discriminator` field which will be used to determine which model's record is stored in a row.
 
+### Multiple discriminators ###
+
+You can also configure a list of allowed discriminators. It's useful for example when working with the files.
+For example:
+
+```php
+//in ImagesTable:
+public function initialize(array $config)
+{
+    $this->addBehavior('Robotusers/TableInheritance.Sti', [
+        'table' => 'files',
+        'discriminatorField' => 'mime',
+        'allowedDiscriminators' => [
+            'image/jpeg',
+            'image/gif',
+            'image/png',
+            'image/tiff'
+        ]
+    ]);
+}
+```
+
+An `ImagesTable` will share `files` db table and match only specified mime types.
+
+### Configuration ###
+
 `StiBehavior` supports following options:
 
 * `discriminatorField` - db table field used to discriminate models, 'discriminator' by default
-* `discriminator` - discriminator value, `$table->alias()` by default
+* `discriminator` - default discriminator value, `$table->alias()` by default
 * `table` - db table to share, use this option or `$table->table()` method.
 * `checkRules` - `true` by default. Allows to enable/disable build-in rule check for a discriminator value.
+* `allowedDiscriminators` - a list of allowed discriminators.
 
 ## StiParentBehavior
 
@@ -51,14 +78,32 @@ public function initialize(array $config)
 {
     $this->addBehavior('Robotusers/TableInheritance.StiParent', [
         'tableMap' => [
-            'admin' => 'Administrators',
-            'client' => 'Clients'
+            'Administrators' => [
+                'admin',
+                'administrator'
+            ],
+            'Clients' => 'client'
         ]
     ]);
 }
 ```
 
-`tableMap` option accepts an array mapping discriminator field values to child tables. It accepts both `Table` objects and registry aliases.
+`tableMap` option accepts an array mapping table registry aliases to discriminator field values.
+
+You can also map discriminator values to specified table objects using `discriminatorMap` option:
+
+```php
+//in UsersTable:
+public function initialize(array $config)
+{
+    $this->addBehavior('Robotusers/TableInheritance.StiParent', [
+        'discriminatorMap' => [
+            'admin' => $this->tableLocator()->get('Administrators'),
+            'client' => $this->tableLocator()->get('Clients')
+        ]
+    ]);
+}
+```
 
 This behavior also provides `newStiEntity()` method which will proxy `newEntity()` to one of the configured tables based on a discriminator value.
 
@@ -69,4 +114,11 @@ $data = [
 ];
 
 $admin = $this->Users->newStiEntity($data); //will call AdministratorsTable::newEntity() and return an Administrator entity instance.
+```
+
+Afterwards you can get a STI table using `stiTable()` method and handle entity using its source `Table` object.
+
+```php
+$table = $this->Users->stiTable($admin); 
+$table->save($admin); //it will save an entity using AdministratorsTable
 ```

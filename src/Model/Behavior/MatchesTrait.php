@@ -20,7 +20,7 @@ trait MatchesTrait
     protected function _matches($subject, array $rules)
     {
         foreach ($rules as $rule) {
-            $pattern = '/^' . str_replace('*', '.*', $rule) . '$/';
+            $pattern = '/^' . str_replace('\*', '.*', preg_quote($rule, '/')) . '$/';
             if (preg_match($pattern, $subject)) {
                 return true;
             }

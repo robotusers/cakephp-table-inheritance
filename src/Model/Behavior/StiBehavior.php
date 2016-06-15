@@ -132,7 +132,9 @@ class StiBehavior extends Behavior
 
         if ($this->_config['checkRules'] && $discriminator !== false) {
             $rule = [$this, 'checkRules'];
-            $rules->add($rule, 'discriminator');
+            $rules->add($rule, 'discriminator', [
+                'errorField' => $this->_config['discriminatorField']
+            ]);
         }
     }
 

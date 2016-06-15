@@ -196,7 +196,7 @@ class StiBehavior extends Behavior
         $field = $this->_config['discriminatorField'];
 
         if ($entity->has($field)) {
-            return in_array($entity->get($field), $this->acceptedDiscriminators());
+            return $this->_matches($entity->get($field), $this->acceptedDiscriminators());
         }
     }
 }

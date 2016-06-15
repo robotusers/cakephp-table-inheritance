@@ -163,9 +163,9 @@ class StiBehavior extends Behavior
      */
     public function beforeFind(Event $event, Query $query)
     {
-        $query->where([
-            $this->_table->aliasField($this->_config['discriminatorField']) => $this->acceptedDiscriminators()
-        ]);
+        $query->where(function($exp){
+            return $exp->or($this->_conditions());
+        });
     }
 
     /**
@@ -198,5 +198,22 @@ class StiBehavior extends Behavior
         if ($entity->has($field)) {
             return $this->_matches($entity->get($field), $this->acceptedDiscriminators());
         }
+    }
+
+    /**
+     *
+     * @return array
+     */
+    protected function _conditions()
+    {
+        $field = $this->_table->aliasField($this->_config['discriminatorField']) . ' LIKE';
+
+        $conditions = [];
+        foreach ($this->acceptedDiscriminators() as $discriminator) {
+            $discriminator = str_replace('*', '%', $discriminator);
+            $conditions[][$field] = $discriminator;
+        }
+
+        return $conditions;
     }
 }

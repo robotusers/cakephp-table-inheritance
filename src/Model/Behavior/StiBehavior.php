@@ -198,6 +198,8 @@ class StiBehavior extends Behavior
         if ($entity->has($field)) {
             return $this->_matches($entity->get($field), $this->acceptedDiscriminators());
         }
+
+        return true;
     }
 
     /**

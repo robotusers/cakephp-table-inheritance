@@ -15,7 +15,7 @@ use Cake\ORM\RulesChecker;
  */
 class StiBehavior extends Behavior
 {
-    
+
     use MatchesTrait;
 
     /**
@@ -179,7 +179,7 @@ class StiBehavior extends Behavior
     {
         $discriminatorField = $this->_config['discriminatorField'];
 
-        if ($entity->has($discriminatorField) && $this->isAcceptedDiscriminator($entity->get($discriminatorField))) {
+        if ($entity->has($discriminatorField) && !$this->isAcceptedDiscriminator($entity->get($discriminatorField))) {
             $event->stopPropagation();
             return false;
         }
@@ -195,7 +195,7 @@ class StiBehavior extends Behavior
     {
         $field = $this->_config['discriminatorField'];
 
-        if ($entity->has($field)) {
+        if ($entity->dirty($field)) {
             return $this->_matches($entity->get($field), $this->acceptedDiscriminators());
         }
 

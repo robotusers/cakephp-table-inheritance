@@ -1,5 +1,8 @@
 # CakePHP Table Inheritance plugin
 
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/robotusers/cakephp-table-inheritance.svg?branch=master)](https://travis-ci.org/robotusers/cakephp-table-inheritance)
+
 This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/Single_Table_Inheritance) (and hopefully will implement Class Table Inheritance in the future) patterns for CakePHP 3.x ORM.
 
 **NOTE: This plugin is under development! Use it at your own risk**

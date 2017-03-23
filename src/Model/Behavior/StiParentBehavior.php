@@ -3,10 +3,10 @@
 namespace Robotusers\TableInheritance\Model\Behavior;
 
 use ArrayAccess;
-use Cake\Database\Query;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Robotusers\TableInheritance\Model\Entity\CopyableEntityInterface;
 
@@ -42,7 +42,7 @@ class StiParentBehavior extends Behavior
     /**
      * Gets a STI table.
      *
-     * @param string|\Cake\Datasource\EntityInterface $subject Discriminator value or an entity.
+     * @param string|ArrayAccess|array $subject Discriminator value or an entity.
      * @return \Cake\ORM\Table
      */
     public function stiTable($subject)
@@ -116,7 +116,7 @@ class StiParentBehavior extends Behavior
      * BeforeFind callback - converts entities based on STI tables.
      *
      * @param \Cake\Event\Event $event Event.
-     * @param \Cake\Database\Query $query Query.
+     * @param \Cake\ORM\Query $query Query.
      * @param \ArrayAccess $options Options.
      * @return void
      */

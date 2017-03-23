@@ -38,7 +38,7 @@ class StiParentBehaviorTest extends TestCase
             'Subscribers' => Reader::class,
             '' => User::class
         ];
-        
+
         $this->table = TableRegistry::get('Users');
         $this->table->entityClass(User::class);
 

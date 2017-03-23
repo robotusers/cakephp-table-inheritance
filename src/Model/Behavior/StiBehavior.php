@@ -163,7 +163,7 @@ class StiBehavior extends Behavior
      */
     public function beforeFind(Event $event, Query $query)
     {
-        $query->where(function($exp){
+        $query->where(function ($exp) {
             return $exp->or($this->_conditions());
         });
     }

@@ -57,6 +57,19 @@ public function initialize(array $config)
         ]
     ]);
 }
+
+//or using wildcards:
+
+public function initialize(array $config)
+{
+    $this->addBehavior('Robotusers/TableInheritance.Sti', [
+        'table' => 'files',
+        'discriminatorField' => 'mime',
+        'allowedDiscriminators' => [
+            'image/*'
+        ]
+    ]);
+}
 ```
 
 An `ImagesTable` will share `files` db table and match only specified mime types.

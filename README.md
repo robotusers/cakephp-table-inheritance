@@ -49,7 +49,7 @@ public function initialize(array $config)
     $this->addBehavior('Robotusers/TableInheritance.Sti', [
         'table' => 'files',
         'discriminatorField' => 'mime',
-        'allowedDiscriminators' => [
+        'acceptedDiscriminators' => [
             'image/jpeg',
             'image/gif',
             'image/png',
@@ -65,7 +65,7 @@ public function initialize(array $config)
     $this->addBehavior('Robotusers/TableInheritance.Sti', [
         'table' => 'files',
         'discriminatorField' => 'mime',
-        'allowedDiscriminators' => [
+        'acceptedDiscriminators' => [
             'image/*'
         ]
     ]);

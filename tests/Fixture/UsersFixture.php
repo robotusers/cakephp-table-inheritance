@@ -18,4 +18,17 @@ class UsersFixture extends TestFixture
         'name' => ['type' => 'string'],
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
     ];
+
+    public $records = [
+        [
+            'id' => 1,
+            'name' => 'John',
+            'discriminator' => 'Authors'
+        ],
+        [
+            'id' => 2,
+            'name' => 'Jane',
+            'discriminator' => 'Editors'
+        ]
+    ];
 }

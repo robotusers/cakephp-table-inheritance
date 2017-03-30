@@ -135,7 +135,7 @@ class StiParentBehaviorTest extends TestCase
         $this->table->saveMany($entities);
 
         $found = $this->table->find()->toArray();
-        $this->assertCount(6, $found);
+        $this->assertCount(8, $found);
 
         foreach ($found as $entity) {
             $class = $this->entityMap[$entity->discriminator];

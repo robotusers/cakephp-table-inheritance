@@ -65,7 +65,7 @@ class StiBehavior extends Behavior
      * Accessor/mutator for discriminator value. It's the value used to determine which row belongs to which table.
      *
      * @param string|null $discriminator Discriminator value.
-     * @return string|false
+     * @return string
      */
     public function discriminator($discriminator = null)
     {
@@ -129,9 +129,7 @@ class StiBehavior extends Behavior
      */
     public function buildRules(Event $event, RulesChecker $rules)
     {
-        $discriminator = $this->discriminator();
-
-        if ($this->_config['checkRules'] && $discriminator !== false) {
+        if ($this->_config['checkRules']) {
             $rule = [$this, 'checkRules'];
             $rules->add($rule, 'discriminator', [
                 'errorField' => $this->_config['discriminatorField']

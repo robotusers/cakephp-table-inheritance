@@ -66,17 +66,43 @@ class StiBehavior extends Behavior
      *
      * @param string|null $discriminator Discriminator value.
      * @return string
+     * @deprecated 0.3.0 Use getDiscriminator() and setDiscriminator() instead.
      */
     public function discriminator($discriminator = null)
     {
         if ($discriminator !== null) {
-            $this->_discriminator = $discriminator;
+            $this->setDiscriminator($discriminator);
         }
+
+        return $this->getDiscriminator();
+    }
+
+    /**
+     * Returns default discriminator value.
+     * If no discriminator has been set table alias is returned.
+     *
+     * @return string
+     */
+    public function getDiscriminator()
+    {
         if ($this->_discriminator === null) {
             $this->_discriminator = $this->_table->alias();
         }
 
         return $this->_discriminator;
+    }
+
+    /**
+     * Sets discriminator value.
+     *
+     * @param string $discriminator Discriminator value.
+     * @return \Cake\ORM\Table
+     */
+    public function setDiscriminator($discriminator)
+    {
+        $this->_discriminator = $discriminator;
+
+        return $this->_table;
     }
 
     /**

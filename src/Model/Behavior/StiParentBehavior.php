@@ -101,11 +101,11 @@ class StiParentBehavior extends Behavior
     /**
      * Creates new entity using STI table.
      *
-     * @param array $data Data.
+     * @param array|null $data Data.
      * @param array $options Options.
      * @return \Cake\Datasource\EntityInterface
      */
-    public function newStiEntity(array $data = [], array $options = [])
+    public function newStiEntity($data = null, array $options = [])
     {
         $table = $this->stiTable($data);
 

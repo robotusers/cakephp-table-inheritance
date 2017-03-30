@@ -34,7 +34,7 @@ public function initialize(array $config)
 {
     $this->table('users');
     $this->addBehavior('Robotusers/TableInheritance.Sti');
-    $this->discriminator('admin');
+    $this->setDiscriminator('admin');
 }
 ```
 Now both the `ClientsTable` and `AdministratorsTable` will share `users` db table. A table has to have a `discriminator` field which will be used to determine which model's record is stored in a row.
@@ -76,6 +76,12 @@ public function initialize(array $config)
 
 An `ImagesTable` will share `files` db table and match only specified mime types.
 
+You can also add accepted discriminators on runtime:
+
+```php
+$table->addAcceptedDiscriminator('image/bmp');
+```
+
 ### Configuration ###
 
 `StiBehavior` supports following options:
@@ -84,7 +90,7 @@ An `ImagesTable` will share `files` db table and match only specified mime types
 * `discriminator` - default discriminator value, `$table->alias()` by default
 * `table` - db table to share, use this option or `$table->table()` method.
 * `checkRules` - `true` by default. Allows to enable/disable build-in rule check for a discriminator value.
-* `allowedDiscriminators` - a list of allowed discriminators.
+* `acceptedDiscriminators` - a list of accepted discriminators.
 
 ## StiParentBehavior
 

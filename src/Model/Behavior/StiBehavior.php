@@ -139,11 +139,13 @@ class StiBehavior extends Behavior
      * Adds an accepted discriminator.
      *
      * @param string $discriminator Discriminator value.
-     * @return void
+     * @return \Cake\ORM\Table
      */
     public function addAcceptedDiscriminator($discriminator)
     {
         $this->_acceptedDiscriminators[] = $discriminator;
+
+        return $this->_table;
     }
 
     /**

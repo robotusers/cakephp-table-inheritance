@@ -79,7 +79,7 @@ class StiParentBehavior extends Behavior
      *
      * @param string $discriminator Discriminator.
      * @param \Cake\ORM\Table|string|array $table Table instance or alias or config.
-     * @return void
+     * @return \Cake\ORM\Table
      */
     public function addStiTable($discriminator, $table)
     {
@@ -96,6 +96,8 @@ class StiParentBehavior extends Behavior
         }
 
         $this->_childTables[$discriminator] = $table;
+
+        return $this->_table;
     }
 
     /**

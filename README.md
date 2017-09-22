@@ -1,5 +1,7 @@
 # CakePHP Table Inheritance plugin
 
+[![Latest Stable Version](https://poser.pugx.org/robotusers/cakephp-table-inheritance/v/stable)](https://packagist.org/packages/robotusers/cakephp-table-inheritance)
+[![Total Downloads](https://poser.pugx.org/robotusers/cakephp-table-inheritance/downloads)](https://packagist.org/packages/robotusers/cakephp-table-inheritance)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/robotusers/cakephp-table-inheritance.svg?branch=master)](https://travis-ci.org/robotusers/cakephp-table-inheritance)
 [![codecov](https://codecov.io/gh/robotusers/cakephp-table-inheritance/branch/master/graph/badge.svg)](https://codecov.io/gh/robotusers/cakephp-table-inheritance/branch/master)

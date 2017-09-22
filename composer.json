@@ -3,6 +3,7 @@
     "description": "Robotusers CakePHP STI & CTI pattern plugin",
     "homepage": "https://github.com/robotusers/cakephp-table-inheritance",
     "type": "cakephp-plugin",
+    "license": "MIT",
     "require": {
         "php": ">=5.5.9",
         "cakephp/orm": "~3.2"

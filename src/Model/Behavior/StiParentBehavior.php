@@ -92,7 +92,7 @@ class StiParentBehavior extends Behavior
                 $alias = $table;
             }
 
-            $table = $this->tableLocator()->get($alias, $options);
+            $table = $this->getTableLocator()->get($alias, $options);
         }
 
         $this->_childTables[$discriminator] = $table;
@@ -124,20 +124,20 @@ class StiParentBehavior extends Behavior
      */
     public function beforeFind(Event $event, Query $query, ArrayAccess $options)
     {
-        if (!$query->hydrate()) {
+        if (!$query->isHydrationEnabled()) {
             return;
         }
         $query->formatResults(function ($results) {
             return $results->map(function ($row) {
                 if ($row instanceof CopyableEntityInterface) {
                     $table = $this->stiTable($row);
-                    $entityClass = $table->entityClass();
+                    $entityClass = $table->getEntityClass();
 
                     $row = new $entityClass($row->copyProperties(), [
                         'markNew' => $row->isNew(),
                         'markClean' => true,
                         'guard' => false,
-                        'source' => $table->registryAlias()
+                        'source' => $table->getRegistryAlias()
                     ]);
                 }
 

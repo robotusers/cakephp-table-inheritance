@@ -6,12 +6,12 @@
     "license": "MIT",
     "require": {
         "php": ">=5.5.9",
-        "cakephp/orm": "~3.2"
+        "cakephp/orm": "~3.5"
     },
     "require-dev": {
         "php": ">=5.5",
         "phpunit/phpunit": "<6.0",
-        "cakephp/cakephp": "~3.2.0",
+        "cakephp/cakephp": "~3.5",
         "cakephp/cakephp-codesniffer": "@stable"
     },
     "autoload": {

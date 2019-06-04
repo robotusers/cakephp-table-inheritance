@@ -13,7 +13,7 @@ This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/
 
 Using composer:
 ```
-composer require robotusers/cakephp-table-inheritance ~0.3
+composer require robotusers/cakephp-table-inheritance
 ```
 
 ## StiBehavior

@@ -17,7 +17,7 @@ use Robotusers\TableInheritance\Test\Mock\User;
 class StiParentBehaviorTest extends TestCase
 {
     public $fixtures = [
-        'plugin.Robotusers\TableInheritance.users'
+        'plugin.Robotusers\TableInheritance.Users'
     ];
 
     /**
@@ -39,16 +39,16 @@ class StiParentBehaviorTest extends TestCase
             '' => User::class
         ];
 
-        $this->table = TableRegistry::get('Users');
-        $this->table->entityClass(User::class);
+        $this->table = TableRegistry::getTableLocator()->get('Users');
+        $this->table->setEntityClass(User::class);
 
-        $authors = TableRegistry::get('Authors', [
+        $authors = TableRegistry::getTableLocator()->get('Authors', [
             'table' => 'users'
         ]);
-        $editors = TableRegistry::get('Editors', [
+        $editors = TableRegistry::getTableLocator()->get('Editors', [
             'table' => 'users'
         ]);
-        $readers = TableRegistry::get('Readers', [
+        $readers = TableRegistry::getTableLocator()->get('Readers', [
             'table' => 'users'
         ]);
 
@@ -68,18 +68,18 @@ class StiParentBehaviorTest extends TestCase
             ]
         ]);
 
-        $authors->entityClass(Author::class);
-        $editors->entityClass(Editor::class);
-        $readers->entityClass(Reader::class);
+        $authors->setEntityClass(Author::class);
+        $editors->setEntityClass(Editor::class);
+        $readers->setEntityClass(Reader::class);
     }
 
     public function testStiTable()
     {
-        $this->table->behaviors()->get('StiParent')->config('tableMap', [
+        $this->table->behaviors()->get('StiParent')->setConfig('tableMap', [
             'Readers' => 'reader_*'
         ], false);
-        $this->table->behaviors()->get('StiParent')->config('discriminatorMap', [
-            '*author' => TableRegistry::get('Authors')
+        $this->table->behaviors()->get('StiParent')->setConfig('discriminatorMap', [
+            '*author' => TableRegistry::getTableLocator()->get('Authors')
         ], false);
 
         $map = [
@@ -96,7 +96,7 @@ class StiParentBehaviorTest extends TestCase
                 'discriminator' => $discriminator
             ]);
             $table = $this->table->stiTable($entity);
-            $this->assertEquals($alias, $table->alias());
+            $this->assertEquals($alias, $table->getAlias());
         }
     }
 

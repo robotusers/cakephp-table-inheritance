@@ -13,7 +13,7 @@ trait MatchesTrait
     /**
      * Checks rules match.
      *
-     * @param type $subject Subject
+     * @param string $subject Subject
      * @param array $rules Rules list
      * @return bool
      */

@@ -13,7 +13,7 @@ use Cake\TestSuite\TestCase;
 class StiBehaviorTest extends TestCase
 {
     public $fixtures = [
-        'plugin.Robotusers\TableInheritance.users'
+        'plugin.Robotusers\TableInheritance.Users'
     ];
 
     public function tearDown()
@@ -74,7 +74,7 @@ class StiBehaviorTest extends TestCase
         ]);
         $table->save($entity);
 
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
         $this->assertEquals('Authors', $entity->discriminator);
 
         $entity2 = $table->newEntity([
@@ -83,7 +83,7 @@ class StiBehaviorTest extends TestCase
         ]);
         $table->save($entity2);
 
-        $this->assertArrayHasKey('discriminator', $entity2->errors());
+        $this->assertArrayHasKey('discriminator', $entity2->getErrors());
         $this->assertEquals('Editors', $entity2->discriminator);
     }
 
@@ -102,7 +102,7 @@ class StiBehaviorTest extends TestCase
         ]);
         $table->save($entity);
 
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
         $this->assertEquals('Editors', $entity->discriminator);
     }
 
@@ -121,7 +121,7 @@ class StiBehaviorTest extends TestCase
         ]);
         $table->save($entity);
 
-        $this->assertEmpty($entity->errors());
+        $this->assertEmpty($entity->getErrors());
         $this->assertEquals('author_foo', $entity->discriminator);
     }
 

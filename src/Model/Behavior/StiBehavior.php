@@ -54,7 +54,7 @@ class StiBehavior extends Behavior
     public function initialize(array $config)
     {
         if ($this->_config['table'] !== null) {
-            $this->_table->table($this->_config['table']);
+            $this->_table->setTable($this->_config['table']);
         }
         if ($this->_config['discriminator'] !== null) {
             $this->setDiscriminator($this->_config['discriminator']);
@@ -86,7 +86,7 @@ class StiBehavior extends Behavior
     public function getDiscriminator()
     {
         if ($this->_discriminator === null) {
-            $this->_discriminator = $this->_table->alias();
+            $this->_discriminator = $this->_table->getAlias();
         }
 
         return $this->_discriminator;
@@ -223,7 +223,7 @@ class StiBehavior extends Behavior
     {
         $field = $this->_config['discriminatorField'];
 
-        if ($entity->dirty($field)) {
+        if ($entity->isDirty($field)) {
             return $this->_matches($entity->get($field), $this->acceptedDiscriminators());
         }
 

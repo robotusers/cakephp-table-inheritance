@@ -3,7 +3,8 @@
 namespace Robotusers\TableInheritance\Model\Behavior;
 
 use ArrayAccess;
-use Cake\Event\Event;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
@@ -122,13 +123,13 @@ class StiParentBehavior extends Behavior
      * @param \ArrayAccess $options Options.
      * @return void
      */
-    public function beforeFind(Event $event, Query $query, ArrayAccess $options)
+    public function beforeFind(EventInterface $event, Query $query, ArrayAccess $options)
     {
         if (!$query->isHydrationEnabled()) {
             return;
         }
         $query->formatResults(function ($results) {
-            return $results->map(function ($row) {
+            return $results->map(function (EntityInterface $row) {
                 if ($row instanceof CopyableEntityInterface) {
                     $table = $this->stiTable($row);
                     $entityClass = $table->getEntityClass();

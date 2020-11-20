@@ -7,13 +7,21 @@
 [![codecov](https://codecov.io/gh/robotusers/cakephp-table-inheritance/branch/master/graph/badge.svg)](https://codecov.io/gh/robotusers/cakephp-table-inheritance/branch/master)
 
 
-This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/Single_Table_Inheritance) (and hopefully will implement Class Table Inheritance in the future) patterns for CakePHP 3.x ORM.
+This plugin implements [Single Table Inheritance](https://en.wikipedia.org/wiki/Single_Table_Inheritance) (and hopefully will implement Class Table Inheritance in the future) patterns for CakePHP ORM.
 
 ## Installation
+
+CakePHP 4.x
 
 Using composer:
 ```
 composer require robotusers/cakephp-table-inheritance
+```
+
+For CakePHP 3.x use version 0.4 of the plugin
+
+```
+composer require robotusers/cakephp-table-inheritance:^0.4
 ```
 
 ## StiBehavior

@@ -16,7 +16,7 @@ class StiBehaviorTest extends TestCase
         'plugin.Robotusers\TableInheritance.Users'
     ];
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

@@ -51,7 +51,7 @@ class StiBehavior extends Behavior
      * @param array $config Config.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         if ($this->_config['table'] !== null) {
             $this->_table->setTable($this->_config['table']);

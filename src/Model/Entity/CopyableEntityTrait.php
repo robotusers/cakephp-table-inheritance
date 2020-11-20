@@ -16,6 +16,6 @@ trait CopyableEntityTrait
      */
     public function copyProperties()
     {
-        return $this->_properties;
+        return $this->_fields;
     }
 }
